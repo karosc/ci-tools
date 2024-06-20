@@ -20,7 +20,7 @@ jobs:
             defaults:
               run:
                 shell: bash
-                working-directory: ./ci-tools/linux
+                working-directory: ./linux
 
     runs-on: ${{ matrix.os }}
     defaults:
