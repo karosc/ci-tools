@@ -14,15 +14,15 @@ RUN `
     # Install Build Tools with the Microsoft.VisualStudio.Workload.AzureBuildTools workload, excluding workloads and components with known issues.
     && (start /w vs_buildtools.exe --quiet --wait --norestart --nocache `
         --installPath "%ProgramFiles(x86)%\Microsoft Visual Studio\2022\BuildTools" `
-        --add Microsoft.VisualStudio.Workload.AzureBuildTools `
+        # --add Microsoft.VisualStudio.Workload.AzureBuildTools `
         --add Microsoft.VisualStudio.Workload.VCTools `
         --add Microsoft.VisualStudio.Component.VC.Tools.x86.x64 `
-        --add Microsoft.VisualStudio.Component.Windows10SDK.19041 `
+        # --add Microsoft.VisualStudio.Component.Windows10SDK.19041 `
         --add Microsoft.VisualStudio.Component.VC.CMake.Project `
-        --remove Microsoft.VisualStudio.Component.Windows10SDK.10240 `
-        --remove Microsoft.VisualStudio.Component.Windows10SDK.10586 `
-        --remove Microsoft.VisualStudio.Component.Windows10SDK.14393 `
-        --remove Microsoft.VisualStudio.Component.Windows81SDK `
+        # --remove Microsoft.VisualStudio.Component.Windows10SDK.10240 `
+        # --remove Microsoft.VisualStudio.Component.Windows10SDK.10586 `
+        # --remove Microsoft.VisualStudio.Component.Windows10SDK.14393 `
+        # --remove Microsoft.VisualStudio.Component.Windows81SDK `
         || IF "%ERRORLEVEL%"=="3010" EXIT 0) `
     `
     # Cleanup
@@ -64,6 +64,9 @@ RUN powershell -Command `
 
 ENV BOOST_ROOT C:\boost
 RUN setx PATH "%PATH%;%BOOST_ROOT%\lib;C:\Program Files\7-Zip"
+
+COPY requirements-swmm.txt .
+RUN python -m pip install -r requirements-swmm.txt
 
 # Define the entry point for the docker container.
 # This entry point starts the developer command prompt and launches the PowerShell shell.
